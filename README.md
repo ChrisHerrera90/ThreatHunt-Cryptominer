@@ -130,7 +130,15 @@ The results show that there have been 1000 successful login attempts. Out of the
 ![image](https://github.com/user-attachments/assets/29a02d33-f2e9-4e20-b6ec-09a216c1206b)
 
 
+
+
+
+
+
+
 ---
+
+INcident Responmmse??????????
 
 ### 3. Searched Device File Events to Identify any Malicious File Artifacts that were created
 
@@ -147,10 +155,17 @@ This query produced over 1000 entries of hundreds of files being deleted and cre
 
 ![image](https://github.com/user-attachments/assets/8676b788-3d0c-4397-b7ab-d2f70e3354cd)
 
+Based on the Bash script found, and Virus Total intel, I refined the query further to try and find evidence of any malicious file names that may have been created:
 
+```kql
+DeviceFileEvents
+| where DeviceName contains "linux-programmatic-fix-jay"
+| where FileName has_any(".diicot", "retea", "payload", "263839397", "81d9b238a4a7e06e0a5bfeaac3a3269d.virus", "6a05")
+| where TimeGenerated between(datetime(2025-05-28T00:00:00Z)..datetime(2025-05-29T00:00:00Z))
+```
+The results came back with one entry that shows the malicious file name `retea` was successfully created on May 28, 2025 at 1:50:10.376 AM UTC in the `/dev/shm/retea` folder path:
 
-
-
+![image](https://github.com/user-attachments/assets/5ff0e3a8-bb07-4ed2-836a-fecc1cc1d905)
 
 
 ---
