@@ -5,6 +5,8 @@
 
 
 ## 🕵🏽 Threat Hunt Scenario:
+Management has reported a recent breach of our Azure environment that resulted in multiple linux VMs being infected with cryptomining software and used as a botnet to launch brute-force attacks against other IP on the internet. This resulted in an entire Azure subscription being cancelled by Microsoft, impacting the operations, revenue and ability to scale the business. The goal of this threat hunt is to investigate the potential existence of other undetected cryptominers that are currently running in other virtual machines within our current Azure subscription
+
 Management has reported a large increase in failed login attempts across the enterprise environment. Logs have shown many virtual endpoints demonstrating this unusual behavior. The goal of this threat hunt is to investigate the existence of potential brute force attacks and to determine if there were any successful login attempts from malicious actors that need to be remediated.
 
 ## 🤔 Threat Hunt Hypothesis
