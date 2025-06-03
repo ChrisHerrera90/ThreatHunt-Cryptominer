@@ -7,14 +7,19 @@
 ## 🕵🏽 Threat Hunt Scenario:
 Management has reported a recent breach of our Azure environment that resulted in multiple linux VMs being infected with cryptomining software and used as a botnet to launch brute-force attacks against other IP on the internet. This resulted in an entire Azure subscription being cancelled by Microsoft, impacting the operations, revenue and ability to scale the business. The goal of this threat hunt is to investigate the potential existence of other undetected cryptominers that are currently running in other virtual machines within our current Azure subscription
 
-Management has reported a large increase in failed login attempts across the enterprise environment. Logs have shown many virtual endpoints demonstrating this unusual behavior. The goal of this threat hunt is to investigate the existence of potential brute force attacks and to determine if there were any successful login attempts from malicious actors that need to be remediated.
-
 ## 🤔 Threat Hunt Hypothesis
-**Hypothesis:** Adversaries are conducting brute force attacks against internet-facing Azure virtual assets in order to gain unauthorized access without triggering account lockouts.
+**Hypothesis:** A Linux or Windows machine has been compromised and is being used to mine cryptocurrency using unauthorized computer resources. Indicators of compromise that will be hunted are based on the **_Resource Hijacking: Compute Hijacking_** sub-technique of **MITRE ID:T1496.001**. They include:
+- DS0017 Command - Monitor executed commands and arguments that may indicate common cryptomining functionality.
+- DS0022	File - Monitor for common cryptomining files on local systems that may indicate compromise and resource usage.
+- DS0029	Network Traffic - Monitor for newly constructed network connections that are sent or received by untrusted hosts. Look for connections to/from strange ports, as well as reputation of IPs and URLs related to cryptocurrency hosts.
+- DS0009	Process - Monitor for common cryptomining software process names that may indicate compromise and resource usage.
+- DS0013	Sensor Health - Monitoring process resource usage to determine anomalous activity associated with malicious hijacking of computer resources such as CPU, memory, and GPU processing resources.
+
+
 
 **Scope:** I will perform the threat hunt across all internet-facing cloud assets within the Azure enterprise environment utilizing Microsoft Sentinel and Microsoft Defender for Endpoint logs. I am specifically looking for activity related to multiple failed logon attempts, logins from abnormal geolocations, password guessing, password cracking, password spraying and credential stuffing.
 
-**Priority:** High — potential unauthorized access to cloud assets.
+**Priority:** High — potential unauthorized access to cloud assets for cryptomining.
 
 **Basis:**
 - Management reports an increase in failed log on attemtps in cloud identities.
