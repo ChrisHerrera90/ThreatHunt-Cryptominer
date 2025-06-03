@@ -1,6 +1,7 @@
 # Threat Hunt Event - Cryptominer Attacks in Azure
 
-![image](https://github.com/user-attachments/assets/10958483-cca1-4103-a29a-f41e736d111c)
+![image](https://github.com/user-attachments/assets/c74df09e-b766-4f20-a516-f5caef968185)
+
 
 
 ## 🕵🏽 Threat Hunt Scenario:
