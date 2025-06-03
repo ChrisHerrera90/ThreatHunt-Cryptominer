@@ -40,11 +40,6 @@ I will perform the threat hunt across all internet-facing cloud assets within th
 - VirusTotal
 - AbuseIPD
 
-## ⛰️ High-Level Overview of Steps Taken During Hunt
-- **Check `SecurityEvents`** for Greater than 10 failed Logon Attempts
-- **Check `SecurityEvents`** for Successful Login Attempts from Malicious IPs
-- **Designed Remediation Steps for Review**
-
 ---
 
 ## 🧩 Steps Taken During Hunt
@@ -170,6 +165,15 @@ The results came back with one entry that shows the malicious file name `retea` 
 
 ---
 
-## Summary
+## Summary and Recommendations
 
-Within the last 7 days, the device `windows-target-1` had incurred over 27,000 failed logon attempts. While investigation, many of these source IPs were from foreign countries and were flagged as malicious by VirustTotal. However, despite the high amounts of attempts, there is no record of a successful log in attempt. Remediation steps have been created and submitted to management for review.
+On May 28, 2025 between 1:45am-2:00am UTC, a malicious actor gained unauthorized access to the `linux-programmatic-fix-jay` linux machine. Due to a lack of EDR onboarding and syslogs, it is unclear how this breach occured. However, a brute force attack was the likely attack vector. During this attack window, the threat actor ran a Bash script that downloaded multiple malware payloads, installed a cryptominer, deleted activity logs, altered configurations to increase resource access, harvested credentials, and deleted log history to evade detection.
+
+**Immediate recommendations include:**
+1. Isolate and decommission the `linux-programmatic-fix-jay` linux machine due to a lack of security controls.
+2. Update SSH lockout policies to prevent brute force attempts.
+3. Institute MFA and complex password creation.
+4. Update policies to ensure that all VMs are properly onboarded to Microsoft Defender for Endpoint.
+5. Update detection rules to alert when they detect the malware artifacts and hash values (`Retea`)
+6. Block the `dinpasiune[.]com` domain and `85[.]31.47.99` IP
+7. Update security group settings to only allow inbound SSH connections from authorized IP addresses.
