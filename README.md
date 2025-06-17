@@ -133,11 +133,9 @@ The results show that there have been 1000 successful login attempts. Out of the
 
 ---
 
-INcident Responmmse??????????
-
 ### 3. Searched Device File Events to Identify any Malicious File Artifacts that were created
 
-Next, I looked up any file events that were recorded in Sentinel to see if I could identify any malicious file artififacts. I utilized the following KQL query to do so
+Next, I looked up any file events that were recorded in Sentinel to see if I could identify any malicious file artiffacts. I utilized the following KQL query to do so
 
 ```kql
 DeviceFileEvents
